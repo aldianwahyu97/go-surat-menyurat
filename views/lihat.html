@@ -1,0 +1,15 @@
+{{define "test"}}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>List Surat</title>
+</head>
+<body>
+{{with.Data}}{{range .}}
+{{.nomorsurat}}"
+{{end}}{{end}}
+</body>
+</html>
+
+{{end}}
