@@ -1,4 +1,4 @@
-{{define "suratkeluar"}}
+{{define "editsuratkeluar"}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -98,89 +98,64 @@
     <div id="content-wrapper">
 
       <div class="container-fluid">
-        <h2 style="padding-top: 10px; padding-bottom: 10px;">Surat Keluar</h2>
-        
+        <h2 style="padding-top: 10px; padding-bottom: 10px;">Edit Surat Keluar Nomor: {{.nomorsurat}}</h2>
+
         <div class="text-right" style="padding-bottom: 10px;">
             <button class="btn btn-success">
-                <a class="nav-link" href="/suratkeluar/tambah" style="color:white">
-                <i class='fas fa-edit'></i> 
-                Tambahkan Surat Keluar
+                <a class="nav-link" href="/suratkeluar" style="color:white">
+                <i class='fa fa-align-justify'></i> 
+                Data Surat Keluar
                 </a>
             </button>
         </div>
-        <!-- Breadcrumbs-->
 
-        <!-- Icon Cards-->
-    
-        <!-- Area Chart Example-->
+        <!-- Menampilkan Alert "Berhasil" -->
+        {{.berhasil}}
 
         <!-- DataTables Example -->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Data Surat Keluar: <b>{{.jumlahdata}}</b></div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>Nomor Surat</th>
-                    <th>Tanggal Keluar</th>
-                    <th>Institusi Penerima</th>
-                    <th>Penerima</th>
-                    <th>Prihal Surat</th>
-                    <th>File</th>
-                    <th>Keterangan</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                    <th>Nomor Surat</th>
-                    <th>Tanggal Keluar</th>
-                    <th>Institusi Penerima</th>
-                    <th>Penerima</th>
-                    <th>Prihal Surat</th>
-                    <th>File</th>
-                    <th>Keterangan</th>
-                    <th></th>
-                  </tr>
-                </tfoot>
-                <tbody>
-                {{with .Data}}{{range .}}
-                  <tr>
-                    <td>{{.Nomorsurat}}</td>
-                    <td>{{.Tanggalkeluar}}</td>
-                    <td>{{.Institusipenerima}}</td>
-                    <td>{{.Penerima}}</td>
-                    <td>{{.Prihal}}</td>
-                    <td>{{.File}}</td>
-                    <td><b>{{.Keterangan}}</b></td>
-                    <td align="center">
-                      <form action="/suratkeluar/edit" method="POST">
-                        <input type="hidden" name="id_suratkeluar" value="{{.Id_suratkeluar}}">
-                            <input type="hidden" name="nomorsurat" value="{{.Nomorsurat}}">
-                            <input type="hidden" name="tanggalkeluar" value="{{.Tanggalkeluar}}">
-                            <input type="hidden" name="institusipenerima" value="{{.Institusipenerima}}">
-                            <input type="hidden" name="penerima" value="{{.Penerima}}">
-                            <input type="hidden" name="prihal" value="{{.Prihal}}">
-                            <input type="hidden" name="file" value="{{.File}}">
-                            <input type="hidden" name="keterangan" value="{{.Keterangan}}">
-                        <button class="btn btn-primary">Edit</button>
-                      </form>
+        <div class="card" style="margin-top: 10px;">
+            <div class="card-header">Edit Data Surat Keluar</div>
+            <div class="card-body">
+                <form action="/suratkeluar/edit/do_edit" method="POST">
+                  <input type="hidden" class="form-control" name="id_suratkeluar" value="{{.id_suratkeluar}}">
+                    <div class="form-group">
+                      <label for="nomorsurat"><b>Nomor Surat:</b></label>
+                      <input type="text" class="form-control" name="nomorsurat" value="{{.nomorsurat}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="tanggalmasuk"><b>Tanggal Masuk:</b></label>
+                      <input type="date" class="form-control" name="tanggalkeluar" value="{{.tanggalkeluar}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="pengirim"><b>Institusi Penerima:</b></label>
+                        <input type="text" class="form-control" name="institusipenerima" value="{{.institusipenerima}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="penerima"><b>Penerima:</b></label>
+                        <input type="text" class="form-control" name="penerima" value="{{.penerima}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="prihal"><b>Prihal Surat:</b></label>
+                        <input type="text" class="form-control" name="prihal" value = "{{.prihal}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="file"><b>File Surat: (.jpg / .png)</b></label>
+                        <input type="file" name="file">
+                    </div>
+                    <div class="form-group">
+                        <label for="keterangan"><b>Keterangan:</b></label>
+                            <div class="radio">
+                                <label><input type="radio" name="keterangan" value="Terkirim"> Terkirim</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="keterangan" value="Waiting List"> Waiting List</label>
+                            </div>
+                    </div>
 
-                      <form action="/suratkeluar/hapus" method="POST">
-                        <input type="hidden" name="id_suratkeluar" value="{{.Id_suratkeluar}}">
-                        <button class="btn btn-danger">Hapus</button>
-                      </form>
-                    </td>
-                  </tr>
-                 {{end}}{{end}}
-                </tbody>
-              </table>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
-          </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+            <div class="card-footer"></div>
         </div>
 
       </div>

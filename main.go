@@ -52,9 +52,12 @@ func main(){
 	// Edit
 	http.HandleFunc("/suratmasuk/edit",model.HandleEditSuratMasuk)
 	http.HandleFunc("/suratmasuk/edit/do_edit",model.EditSuratMasuk)
+	http.HandleFunc("/suratkeluar/edit",model.HandleEditSuratKeluar)
+	http.HandleFunc("/suratkeluar/edit/do_edit",model.EditSuratKeluar)
 
 	// Hapus 
 	http.HandleFunc("/suratmasuk/hapus",model.HapusSuratMasuk)
+	http.HandleFunc("/suratkeluar/hapus",model.HapusSuratKeluar)
 	
 	fmt.Println("Memulai Server pada Port: 9000...")
 	http.ListenAndServe(":9000",nil)
