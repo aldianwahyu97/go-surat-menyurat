@@ -1,4 +1,4 @@
-{{define "tambahsuratmasuk"}}
+{{define "editsuratmasuk"}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -98,7 +98,7 @@
     <div id="content-wrapper">
 
       <div class="container-fluid">
-        <h2 style="padding-top: 10px; padding-bottom: 10px;">Tambah Surat Masuk</h2>
+        <h2 style="padding-top: 10px; padding-bottom: 10px;">Edit Surat Masuk Nomor: {{.nomorsurat}}</h2>
 
         <div class="text-right" style="padding-bottom: 10px;">
             <button class="btn btn-success">
@@ -114,28 +114,29 @@
 
         <!-- DataTables Example -->
         <div class="card" style="margin-top: 10px;">
-            <div class="card-header">Tambah Data Surat Masuk</div>
+            <div class="card-header">Edit Data Surat Masuk</div>
             <div class="card-body">
-                <form action="/suratmasuk/tambah/add" method="POST">
+                <form action="/suratmasuk/edit/do_edit" method="POST">
+                  <input type="hidden" class="form-control" name="id_suratmasuk" value="{{.id_suratmasuk}}">
                     <div class="form-group">
-                      <label for="nomorsurat">Nomor Surat:</label>
-                      <input type="text" class="form-control" name="nomorsurat" placeholder="Nomor Surat">
+                      <label for="nomorsurat"><b>Nomor Surat:</b></label>
+                      <input type="text" class="form-control" name="nomorsurat" value="{{.nomorsurat}}">
                     </div>
                     <div class="form-group">
-                      <label for="tanggalmasuk">Tanggal Masuk:</label>
-                      <input type="date" class="form-control" name="tanggalmasuk" placeholder="Tanggal Masuk">
+                      <label for="tanggalmasuk"><b>Tanggal Masuk:</b></label>
+                      <input type="date" class="form-control" name="tanggalmasuk" value="{{.tanggalmasuk}}">
                     </div>
                     <div class="form-group">
-                        <label for="pengirim">Institusi Pengirim:</label>
-                        <input type="text" class="form-control" name="pengirim" placeholder="Institusi Pengirim">
+                        <label for="pengirim"><b>Institusi Pengirim:</b></label>
+                        <input type="text" class="form-control" name="pengirim" value="{{.pengirim}}">
                     </div>
                     <div class="form-group">
-                        <label for="penerima">Penerima:</label>
-                        <input type="text" class="form-control" name="penerima" placeholder="Penerima">
+                        <label for="penerima"><b>Penerima:</b></label>
+                        <input type="text" class="form-control" name="penerima" value="{{.penerima}}">
                     </div>
                     <div class="form-group">
-                        <label for="prihal">Prihal Surat:</label>
-                        <input type="text" class="form-control" name="prihal" placeholder="Prihal Surat">
+                        <label for="prihal"><b>Prihal Surat:</b></label>
+                        <input type="text" class="form-control" name="prihal" value = "{{.prihal}}">
                     </div>
                     <div class="form-group">
                         <label for="file"><b>File Surat: (.jpg / .png)</b></label>

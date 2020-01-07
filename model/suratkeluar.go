@@ -99,6 +99,8 @@ func HandleTambahSuratKeluar(w http.ResponseWriter,r *http.Request){
 
 func AddSuratKeluar(w http.ResponseWriter, r *http.Request){
 	if r.Method == "POST"{
+		var tmpl = template.Must(template.New("tambahsuratkeluar").ParseFiles("views/tambah_suratkeluar.html"))
+
 		db, err := connect()
 		if err != nil{
 			fmt.Println(err.Error())
@@ -121,5 +123,15 @@ func AddSuratKeluar(w http.ResponseWriter, r *http.Request){
 			return
 		}
 		defer rows.Close()
+
+		var data = map[string]interface{}{
+			"notif" : "Berhasil",
+			"berhasil": template.HTML("<div class='alert alert-success'><strong>Berhasil!</strong> Data surat keluar berhasil ditambahkan!.</div>"),
+		}
+
+		if err := tmpl.Execute(w,data); err != nil{
+			http.Error(w,err.Error(),http.StatusInternalServerError)
+		}
+		return
 	}
 }

@@ -108,7 +108,6 @@ func HandleTambahSuratMasuk(w http.ResponseWriter,r *http.Request){
 func AddSuratMasuk(w http.ResponseWriter, r *http.Request){
 	if r.Method == "POST"{
 		var tmpl = template.Must(template.New("tambahsuratmasuk").ParseFiles("views/tambah_suratmasuk.html"))
-
 		db, err := connect()
 		if err != nil{
 			fmt.Println(err.Error())
@@ -132,10 +131,83 @@ func AddSuratMasuk(w http.ResponseWriter, r *http.Request){
 		}
 		defer rows.Close()
 
-		// notif := "Berhasil Tambah Data"
+		var data = map[string]interface{}{
+			"notif" : "Berhasil",
+			"berhasil": template.HTML("<div class='alert alert-success'><strong>Berhasil!</strong> Data surat masuk berhasil ditambahkan!</div>"),
+		}
 
-		var data = map[string]string{
-			"notif" : "Berhasil Menambahkan Data",
+		if err := tmpl.Execute(w,data); err != nil{
+			http.Error(w,err.Error(),http.StatusInternalServerError)
+		}
+		return
+	}
+
+	http.Error(w,"",http.StatusBadRequest)
+}
+
+func HandleEditSuratMasuk(w http.ResponseWriter, r *http.Request){
+	if r.Method == "POST"{
+		var tmpl = template.Must(template.New("editsuratmasuk").ParseFiles("views/edit_suratmasuk.html"))
+
+		id_suratmasuk := r.FormValue("id_suratmasuk")
+		nomorsurat := r.FormValue("nomorsurat")
+		tanggalmasuk := r.FormValue("tanggalmasuk")
+		pengirim := r.FormValue("pengirim")
+		penerima := r.FormValue("penerima")
+		prihal := r.FormValue("prihal")
+		file := r.FormValue("file")
+		keterangan := r.FormValue("keterangan")
+
+		var data = map[string]interface{}{
+			"id_suratmasuk" : id_suratmasuk,
+			"nomorsurat" : nomorsurat,
+			"tanggalmasuk" : tanggalmasuk,
+			"pengirim" : pengirim,
+			"penerima" : penerima,
+			"prihal" : prihal,
+			"file" : file,
+			"keterangan" : keterangan,
+		}
+
+		var err = tmpl.Execute(w,data)
+		if err != nil{
+			http.Error(w, err.Error(),http.StatusInternalServerError)
+		}
+		return
+	}
+	http.Error(w,"",http.StatusBadRequest)
+}
+
+func EditSuratMasuk(w http.ResponseWriter, r *http.Request){
+	if r.Method == "POST"{
+		var tmpl = template.Must(template.New("editsuratmasuk").ParseFiles("views/edit_suratmasuk.html"))
+		db, err := connect()
+		if err != nil{
+			fmt.Println(err.Error())
+			return 
+		}
+		defer db.Close()
+
+		var id_suratmasuk = r.FormValue("id_suratmasuk")
+		var nomorsurat = r.FormValue("nomorsurat")
+		var tanggalmasuk = r.FormValue("tanggalmasuk")
+		var pengirim = r.FormValue("pengirim")
+		var penerima = r.FormValue("penerima")
+		var prihal = r.FormValue("prihal")
+		var file = r.FormValue("file")
+		var keterangan = r.FormValue("keterangan")
+
+		rows, err := db.Query("UPDATE `suratmasuk` SET `nomorsurat`=?,`tanggalmasuk`=?,`pengirim`=?,`penerima`=?,`prihal`=?,`file`=?,`keterangan`=? WHERE id_suratmasuk=?",nomorsurat,tanggalmasuk,pengirim,penerima,prihal,file,keterangan,id_suratmasuk)
+
+		if err != nil{
+			fmt.Println(err.Error())
+			return 
+		}
+		defer rows.Close()
+
+		var data = map[string]interface{}{
+			"notif" : "Berhasil",
+			"berhasil": template.HTML("<div class='alert alert-success'><strong>Berhasil!</strong> Data surat masuk berhasil di-edit!</div>"),
 		}
 
 		if err := tmpl.Execute(w,data); err != nil{

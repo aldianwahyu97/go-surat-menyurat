@@ -42,11 +42,17 @@ func main(){
 	http.HandleFunc("/login",HandleLogin)
 	http.HandleFunc("/suratmasuk",model.HandleSuratMasuk)
 	http.HandleFunc("/suratkeluar",model.HandleSuratKeluar)
+
+	// Tambah
 	http.HandleFunc("/suratmasuk/tambah",model.HandleTambahSuratMasuk)
 	http.HandleFunc("/suratkeluar/tambah",model.HandleTambahSuratKeluar)
 	http.HandleFunc("/suratmasuk/tambah/add",model.AddSuratMasuk)
 	http.HandleFunc("/suratkeluar/tambah/add",model.AddSuratKeluar)
 
+	// Edit
+	http.HandleFunc("/suratmasuk/edit",model.HandleEditSuratMasuk)
+	http.HandleFunc("/suratmasuk/edit/do_edit",model.EditSuratMasuk)
+	
 	fmt.Println("Memulai Server pada Port: 9000...")
 	http.ListenAndServe(":9000",nil)
 }

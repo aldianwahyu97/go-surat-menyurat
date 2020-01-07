@@ -146,6 +146,7 @@
                   </tr>
                 </tfoot>
                 <tbody>
+            <!-- Menampilkan seluruh data dari database -->
                 {{with .Data}}{{range .}}
                   <tr>
                     <td>{{.Nomorsurat}}</td>
@@ -156,24 +157,21 @@
                     <td>{{.File}}</td>
                     <td><b>{{.Keterangan}}</b></td>
                     <td align="center">
-                        <button class="btn btn-primary">Edit</button>
+                        <form action="/suratmasuk/edit?Id_suratmasuk={{.Id_suratmasuk}}" method="POST">
+                            <input type="hidden" name="id_suratmasuk" value="{{.Id_suratmasuk}}">
+                            <input type="hidden" name="nomorsurat" value="{{.Nomorsurat}}">
+                            <input type="hidden" name="tanggalmasuk" value="{{.Tanggalmasuk}}">
+                            <input type="hidden" name="pengirim" value="{{.Pengirim}}">
+                            <input type="hidden" name="penerima" value="{{.Penerima}}">
+                            <input type="hidden" name="prihal" value="{{.Prihal}}">
+                            <input type="hidden" name="file" value="{{.File}}">
+                            <input type="hidden" name="keterangan" value="{{.Keterangan}}">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
                         <button class="btn btn-danger">Hapus</button>
                     </td>
                   </tr>
                   {{end}}{{end}}
-                  <!-- <tr>
-                    <td>123/III/DPRD-Kota/001/2020</td>
-                    <td>02/01/2020</td>
-                    <td>DPRD Kota</td>
-                    <td>Aldian Wahyu Septiadi</td>
-                    <td>Undangan Rapat</td>
-                    <td>File</td>
-                    <td><b>Dijadwalkan</b></td>
-                    <td align="center">
-                        <button class="btn btn-primary">Edit</button>
-                        <button class="btn btn-danger">Hapus</button>
-                    </td>
-                  </tr> -->
                 </tbody>
 
               </table>
