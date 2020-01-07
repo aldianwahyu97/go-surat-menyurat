@@ -218,3 +218,43 @@ func EditSuratMasuk(w http.ResponseWriter, r *http.Request){
 
 	http.Error(w,"",http.StatusBadRequest)
 }
+
+func HapusSuratMasuk(w http.ResponseWriter, r *http.Request){
+	if r.Method == "POST"{
+		var tmpl = template.Must(template.New("suratmasuk").ParseFiles("views/surat_masuk.html"))
+		jumlahdata := len(datasuratmasuk)
+		
+		db, err := connect()
+		if err != nil{
+			fmt.Println(err.Error())
+			return 
+		}
+		defer db.Close()
+
+		var id_suratmasuk = r.FormValue("id_suratmasuk")
+
+		rows, err := db.Query("DELETE FROM `suratmasuk` WHERE id_suratmasuk=?",id_suratmasuk)
+
+		if err != nil{
+			fmt.Println(err.Error())
+			return 
+		}
+		defer rows.Close()
+
+		GetDataSuratMasuk()
+
+		var data = map[string]interface{}{
+			"title" : "Data Surat Masuk",
+			"Data" : datasuratmasuk,
+			"jumlahdata" : jumlahdata,
+			"berhasil": template.HTML("<div class='alert alert-warning'><strong>Berhasil!</strong> Data surat masuk berhasil di-hapus!</div>"),
+		}
+
+		if err := tmpl.Execute(w,data); err != nil{
+			http.Error(w,err.Error(),http.StatusInternalServerError)
+		}
+		return
+	}
+
+	http.Error(w,"",http.StatusBadRequest)
+}

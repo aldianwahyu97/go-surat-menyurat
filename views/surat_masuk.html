@@ -107,6 +107,8 @@
                 </a>
             </button>
         </div>
+
+        {{.berhasil}}
         <!-- Breadcrumbs-->
 
         <!-- Icon Cards-->
@@ -168,7 +170,11 @@
                             <input type="hidden" name="keterangan" value="{{.Keterangan}}">
                             <button type="submit" class="btn btn-primary">Edit</button>
                         </form>
-                        <button class="btn btn-danger">Hapus</button>
+
+                        <form action="/suratmasuk/hapus" method="POST">
+                          <input type="hidden" name="id_suratmasuk" value="{{.Id_suratmasuk}}">
+                          <button class="btn btn-danger">Hapus</button>
+                        </form>
                     </td>
                   </tr>
                   {{end}}{{end}}
